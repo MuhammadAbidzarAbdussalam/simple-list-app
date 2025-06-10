@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
+    android:layout_margin="16dp"
     tools:context=".ui.detail.DetailActivity">
 
     <TextView
@@ -13,13 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtTitle"
+        app:layout_constraintBottom_toTopOf="@+id/txtId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="userId" />
+        tools:text="UserId" />
+
+    <TextView
+        android:id="@+id/txtId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserId"
+        app:layout_constraintVertical_bias="0.5"
+        tools:text="Id" />
 
     <TextView
         android:id="@+id/txtTitle"
@@ -29,7 +41,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txtBody"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUserId"
+        app:layout_constraintTop_toBottomOf="@+id/txtId"
         app:layout_constraintVertical_bias="0.5"
         tools:text="Title" />
 
