@@ -3,8 +3,8 @@ package com.abidzar.simplelistapp.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Filter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,18 +18,20 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
     private List<User> users = new ArrayList<>();
-    private AdapterView.OnItemClickListener listener;
+    private List<User> usersFull; // A copy of the original list for filtering
+    private OnUserClickListener listener;
+
+    public interface OnUserClickListener {
+        void onUserClick(User user);
+    }
 
     public void setUsers(List<User> users) {
         this.users = users;
+        this.usersFull = new ArrayList<>(users); // Initialize the full list
         notifyDataSetChanged();
     }
 
-    public User getItem(int position) {
-        return users.get(position);
-    }
-
-    public void setOnClickListener(AdapterView.OnItemClickListener listener) {
+    public void setOnUserClickListener(OnUserClickListener listener) {
         this.listener = listener;
     }
 
@@ -44,7 +46,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = users.get(position);
         holder.bind(user);
-        holder.itemView.setOnClickListener(v -> listener.onItemClick(null, v, position, 0));
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onUserClick(user);
+            }
+        });
     }
 
     @Override
@@ -52,13 +59,46 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return users.size();
     }
 
-    public class UserViewHolder extends RecyclerView.ViewHolder {
+    public Filter getFilter() {
+        return userFilter;
+    }
+
+    private final Filter userFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<User> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(usersFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (User user : usersFull) {
+                    if (user.getTitle().toLowerCase().contains(filterPattern) ||
+                        String.valueOf(user.getId()).contains(filterPattern)) {
+                        filteredList.add(user);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            users.clear();
+            users.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
         private TextView txtId;
         private TextView txtTitle;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-
             txtId = itemView.findViewById(R.id.txtId);
             txtTitle = itemView.findViewById(R.id.txtTitle);
         }
