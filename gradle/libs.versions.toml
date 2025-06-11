@@ -13,6 +13,7 @@ livedata = "2.8.7"
 retrofit = "3.0.0"
 retrofitConverter = "3.0.0"
 cardView = "1.0.0"
+coreTesting = "2.2.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -28,6 +29,7 @@ livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofitconverter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitConverter" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardView" }
+core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

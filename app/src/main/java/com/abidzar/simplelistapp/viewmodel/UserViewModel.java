@@ -9,10 +9,15 @@ import com.abidzar.simplelistapp.data.repository.UserRepository;
 import java.util.List;
 
 public class UserViewModel extends ViewModel {
-    private UserRepository repository;
+    private final UserRepository repository;
 
     public UserViewModel() {
-        repository = new UserRepository();
+        this(new UserRepository());
+    }
+
+    // Constructor for testing
+    public UserViewModel(UserRepository repository) {
+        this.repository = repository;
     }
 
     public LiveData<List<User>> getUsers() {

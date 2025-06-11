@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.cardview)
 
     testImplementation(libs.junit)
+    testImplementation(libs.core.testing)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
